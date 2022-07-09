@@ -1,6 +1,12 @@
 import os
 from openpyxl import Workbook
 from openpyxl import load_workbook
+from datetime import datetime
+
+month = datetime.now().strftime('%h')
+year = datetime.now().strftime('%Y')
+outputFileName = 'rc_' + month + year + '.xlsx'
+
 # openpyxl is python library to read/write excel
 
 dest_wb = Workbook()
@@ -28,4 +34,4 @@ for root, dirs, filenames in os.walk(dir_containing_files):
 
 os.chdir(dir_containing_files)
 dest_wb.remove(dest_wb['Sheet'])
-dest_wb.save("total.xlsx")
+dest_wb.save(outputFileName)

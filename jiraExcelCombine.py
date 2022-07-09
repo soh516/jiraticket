@@ -2,6 +2,7 @@ import os
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from datetime import datetime
+import pandas as pd
 
 month = datetime.now().strftime('%h')
 year = datetime.now().strftime('%Y')
@@ -17,10 +18,14 @@ dir_containing_files = "/home/hus/Documents"
 # os.walk() returns current_path, directories in current_path, files in current_path
 for root, dirs, filenames in os.walk(dir_containing_files):
     for file in filenames:
-        if file.endswith('.xlsx'):
+        if file.endswith('.csv'):
             # file is with extension. Get rid of extension as file_name
+            csv_file_path = os.path.abspath(os.path.join(root, file))
+            read_file = pd.read_csv(csv_file_path, delimiter=';')
             file_name = file.split('.')[0]
-            file_path = os.path.abspath(os.path.join(root, file))
+            excel_file_name = file_name + '.xlsx'
+            file_path = os.path.abspath(os.path.join(root, excel_file_name))
+            read_file.to_excel(file_path, index=False, header=True)
 
             dest_wb.create_sheet(file_name)
             dest_ws = dest_wb[file_name]
@@ -32,6 +37,6 @@ for root, dirs, filenames in os.walk(dir_containing_files):
                 for cell in row:
                     dest_ws[cell.coordinate] = cell.value
 
-os.chdir(dir_containing_files)
+outputFileName = dir_containing_files + '/' + outputFileName
 dest_wb.remove(dest_wb['Sheet'])
 dest_wb.save(outputFileName)

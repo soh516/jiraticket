@@ -21,7 +21,8 @@ for root, dirs, filenames in os.walk(dir_containing_files):
         if file.endswith('.csv'):
             # file is with extension. Get rid of extension as file_name
             csv_file_path = os.path.abspath(os.path.join(root, file))
-            read_file = pd.read_csv(csv_file_path, delimiter=';')
+            # pay attention to the delimiter here. We assume it is "," not ";"
+            read_file = pd.read_csv(csv_file_path, delimiter=',')
             file_name = file.split('.')[0]
             excel_file_name = file_name + '.xlsx'
             file_path = os.path.abspath(os.path.join(root, excel_file_name))

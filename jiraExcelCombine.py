@@ -1,4 +1,6 @@
 import os
+import glob
+import shutil
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from datetime import datetime
@@ -13,7 +15,7 @@ outputFileName = 'rc_' + month + year + '.xlsx'
 dest_wb = Workbook()
 
 # dir where my excel files are. The combined file will also be saved here. 
-dir_containing_files = "/home/hus/Documents"
+dir_containing_files = "/home/soh516/Documents"
 
 # os.walk() returns current_path, directories in current_path, files in current_path
 for root, dirs, filenames in os.walk(dir_containing_files):
@@ -43,3 +45,16 @@ for root, dirs, filenames in os.walk(dir_containing_files):
 outputFileName = dir_containing_files + '/' + outputFileName
 dest_wb.remove(dest_wb['Sheet'])
 dest_wb.save(outputFileName)
+
+# copy all useful files to my onedrive
+fullMonth = datetime.now().strftime('%B')
+finalSaveDir = "/home/soh516/onedrive-usask" + "/jira/" + fullMonth
+isExist = os.path.exists(finalSaveDir)
+
+if not isExist:
+    os.makedirs(finalSaveDir)
+
+for root, dirs, filenames in os.walk(dir_containing_files):
+    for file in filenames:
+        src_file_path = os.path.abspath(os.path.join(root, file))
+        shutil.copy(src_file_path, finalSaveDir + '/')

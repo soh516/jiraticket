@@ -38,6 +38,8 @@ for root, dirs, filenames in os.walk(dir_containing_files):
                 for cell in row:
                     dest_ws[cell.coordinate] = cell.value
 
+            os.remove(file_path)
+
 outputFileName = dir_containing_files + '/' + outputFileName
 dest_wb.remove(dest_wb['Sheet'])
 dest_wb.save(outputFileName)

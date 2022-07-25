@@ -53,7 +53,8 @@ class getString:
                 + self.start_date \
                 + "' AND createdDate <= '" \
                 + self.end_date + "'" \
-                + " AND text ~ redcap AND \"ISD Queue\" = \"Research Computing\""
+                + " AND text ~ redcap AND \"ISD Queue\" = \"Research Computing\"" \
+                + " AND status != Canceled"
     def getGeneralSearchString(self):
         return "createdDate >= '" \
                 + self.start_date \
@@ -61,7 +62,7 @@ class getString:
                 + self.end_date + "'" \
                 + " AND assignee = " \
                 + self.nsid \
-                + " AND text !~ redcap AND \"ISD Queue\" = \"Research Computing\""
+                + " AND summary !~ redcap AND \"ISD Queue\" = \"Research Computing\""
     def getHPCSearchString(self):
         return "createdDate >= '" \
                 + self.start_date \

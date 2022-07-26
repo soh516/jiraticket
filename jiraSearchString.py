@@ -1,7 +1,9 @@
 from datetime import *
 
 today = date.today()
+# Find the first day of the current month
 first = today.replace(day=1)
+# Find the last day of the previous month
 lastMonth = first - timedelta(days=1)
 
 start_year = lastMonth.strftime('%Y')
